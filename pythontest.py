@@ -1,4 +1,5 @@
 from collections import Iterable
+from functools import reduce
 import os
 s = (1,2,3)
 d = {'one' : '1', 'two' : '2', 'three' : '3'}
@@ -28,6 +29,7 @@ print([m + n for m in 'ABC' for n in 'XYZ'])
 print([d for d in os.listdir('.')])
 for d in os.listdir('.'):
     print(d)
+#生成器
 g = (x * x for x in range(10))
 for n in g:
     print(n)
@@ -43,7 +45,7 @@ def fib(max):
         n = n + 1
     return 'done'
 fib(6)
-
+#生成器
 def fib_1(max):
     n, a, b = 0, 0, 1
     while n < max:
@@ -76,3 +78,22 @@ for c in t:
     if n > 10:
         break
     n = n + 1
+#函数作为参数传入
+def add(x, y, f):
+    return f(x) + f(y)
+
+print(add(-5, -6, abs))
+
+#map()和reduce()函数
+#map接收两个参数：函数，Iterable     将函数依次作用到序列的每个元素
+print(list(map(str, [1, 2, 3, 4, 5, 6, 7, 8, 9])))
+#reduce  导入，接受两个参数：函数，Iterable   函数必须有两个参数，将函数作用到序列，将结果继续和下一个参数作用
+def add_1(x, y):
+    return 10 * x + y
+
+print(reduce(add_1, [1, 2, 3, 4]))
+
+num = {'0' : 0, '1' : 1, '2' : 2,  '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9}
+def charnum(s):
+    return num[s]
+print(reduce(add_1, map(charnum, '123456')))
