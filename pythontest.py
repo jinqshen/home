@@ -97,3 +97,38 @@ num = {'0' : 0, '1' : 1, '2' : 2,  '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 
 def charnum(s):
     return num[s]
 print(reduce(add_1, map(charnum, '123456')))
+
+def odd(num):
+    return num % 2 == 1
+
+def not_empty(s):
+    return s and s.strip()
+	
+print(list(filter(odd, [1, 2, 4, 5, 6, 7, 9])))
+print(list(filter(not_empty, ['A', 'B', '', '', 'C', None,' '])))
+
+
+def _odd_iter():
+    n = 1
+    while True:
+        n = n + 2
+        yield n
+
+def _not_divisiable(n):
+    return lambda x : x % n > 0
+
+def primes():
+    yield 2
+    it = _odd_iter()
+    while True:
+        n = next(it)
+        yield n
+        it = filter(_not_divisiable(n), it)
+
+for i in primes():
+    if i < 1000:
+        print(i)
+    else:
+        break
+a = 13
+print(int(a/10))
