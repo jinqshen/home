@@ -63,3 +63,31 @@ def now():
     print('2018-10-23')
 #相当于执行了now = log(now)
 now()
+#如果decorator本身需要传入参数，则需要编写一个返回decorater的高阶函数
+def log_1(text):
+    def decorater(func):
+        #保证最终weather.__name__不会变成wrapper
+        @functools.wraps(func)
+        def wrapper(*args, **kw):
+            print('%s %s():' % (text, func.__name__))
+            return func(*args, **kw)
+        return wrapper
+    return decorater
+
+@log_1('personal define')
+def weather():
+    print('today, the weather is sunny!')
+weather()
+#相当于weather = log_1('personal define')(weather)
+
+print(weather.__name__)
+#偏函数,用于参数简化
+print(int('12345'))
+print(int('10101010', base=2))
+def int2(x, base=2):
+    return int(x, base)
+
+print(int2('10101010'))
+int3 = functools.partial(int, base=2)
+#functools.partial,设定函数的默认值
+print(int3('10101010'))
