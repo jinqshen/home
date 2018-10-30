@@ -90,7 +90,14 @@ class Chain(object):
     def __str__(self):
         return self.__path
 
+    #对实例进行函数式调用
+    def __call__(self, param):
+        return Chain('%s:%s' % (self.__path, param))
+
     __repr__ = __str__
 
 print(Chain().jinqshen.shop.admin.login)
+print(Chain().user('jinqshen').shop.admin.login)
+c = Chain()
+print(c('ig'))
 
